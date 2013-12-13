@@ -1,0 +1,31 @@
+#wrap {
+  width: 1200px;
+  max-width: 96%;
+  margin: 2rem auto;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+li {
+  color: #0A7B83;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  font-size: 6rem;
+  width: 16%;
+
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+
+  -webkit-perspective: 600px;
+  -moz-perspective: 600px;
+  -o-perspective: 600px;
+  perspective: 600px;
+}
