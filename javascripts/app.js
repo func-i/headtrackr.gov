@@ -6,12 +6,12 @@ htracker.init(videoInput, canvasInput);
 htracker.start();
 
 var defaultHeadMiddle = {
-  top: 12.0,
+  top: 13.0,
   left: 0.0
 };
 
 var defaultHeadBounds = {
-  top: 14.0,
+  top: 2.0,
   left: 8.0
 };
 
@@ -19,6 +19,8 @@ var defaultRotationAngleBounds = {
   top: 45,
   left: 60
 };
+
+var defaultShadowDistance = 10;
 
 $(function() {
 
@@ -33,8 +35,8 @@ $(function() {
       var elemLeft = elemPosition.left;
       var elemTop = elemPosition.top;
 
-      var xElemOffset = (elemLeft - xMiddle) / windowWidth;
-      var yElemOffset = (elemTop - yMiddle) / windowHeight;
+      var xElemOffset = (elemLeft - xMiddle) / xMiddle;
+      var yElemOffset = (yMiddle - elemTop) / yMiddle;
 
       var headLeft = ev.x;
       var headTop = ev.y;
@@ -49,18 +51,22 @@ $(function() {
         xHeadOffset = (headLeft - defaultHeadMiddle.left) / defaultHeadBounds.left;
       }
 
-      if (headTop > defaultHeadBounds.top) {
+      if (headTop > (defaultHeadMiddle.top + defaultHeadBounds.top)) {
         yHeadOffset = 1.0;
-      } else if (headTop < -defaultHeadBounds.top) {
+      } else if (headTop < (defaultHeadMiddle.top - defaultHeadBounds.top)) {
         yHeadOffset = -1.0;
       } else {
         yHeadOffset = (headTop - defaultHeadMiddle.top) / defaultHeadBounds.top;
       }
 
-      var leftRotationAngle = (xHeadOffset - xElemOffset) * (defaultRotationAngleBounds.left / 2);
-      var topRotationAngle = (yHeadOffset - yElemOffset) * (defaultRotationAngleBounds.top / 2);
+      var leftRotationAngle = Math.round((xHeadOffset - xElemOffset) * (defaultRotationAngleBounds.left / 2));
+      var topRotationAngle = Math.round((yHeadOffset - yElemOffset) * (defaultRotationAngleBounds.top / 2));
+
+      var leftShadow = Math.round(xHeadOffset * -defaultShadowDistance);
+      var topShadow = Math.round(yHeadOffset * defaultShadowDistance);
 
       $(this).css('webkitTransform', "rotateX("+topRotationAngle+"deg) rotateY("+leftRotationAngle+"deg)");
+      $(this).children('i').css('textShadow', leftShadow+"px "+topShadow+"px 10px rgba(20, 20, 20, 1)");
     });
   });
 });
